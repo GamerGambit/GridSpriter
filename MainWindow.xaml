@@ -3,10 +3,81 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GridSpriter"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+		mc:Ignorable="d"
+		Title="Planimeter/Grid-SDK Spriter" Height="450" Width="768">
+	<DockPanel>
+		<Menu DockPanel.Dock="Top">
+			<MenuItem Header="_File">
+				<MenuItem Header="_Open" Click="FileOpen" />
+				<MenuItem Header="_Export" Click="FileExport" />
+				<Separator />
+				<MenuItem Header="Set Grid Images Root" Click="SetImagesRoot" />
+				<Separator />
+				<MenuItem Header="_Exit" Click="Exit" />
+			</MenuItem>
+			<MenuItem Header="Icon">
+				<MenuItem Header="Set Frame Size" Click="ChangeFrameSize" />
+			</MenuItem>
+		</Menu>
+		<DockPanel>
+			<Grid DockPanel.Dock="Left" Margin="2,2,2,2">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<ListBox Name="AnimationList" Grid.Row="0" Width="150" SelectionChanged="AnimationSelected">
+					<ListBox.ContextMenu>
+						<ContextMenu>
+							<MenuItem Header="Rename" Click="AnimationRename" />
+							<MenuItem Header="Remove" Click="AnimationRemove" />
+						</ContextMenu>
+					</ListBox.ContextMenu>
+				</ListBox>
+				<Button Content="Add Animation" Grid.Row="1" Click="AddAnimation" DockPanel.Dock="Bottom" Height="30" Margin="0,2,0,0" />
+			</Grid>
+			<Grid DockPanel.Dock="Top" Margin="0,2,2,2">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<Image Name="Preview" Grid.Row="0" RenderOptions.BitmapScalingMode="NearestNeighbor" />
+				<Border BorderThickness="1" BorderBrush="#999" />
+				<UniformGrid Grid.Row="1" Rows="1" Margin="5">
+					<Button Click="FirstFrame" Margin="2">&#x23EE;</Button>
+					<Button Click="PrevFrame" Margin="2">&#x23EA;</Button>
+					<Button Name="PlayPauseBtn" Click="PlayPause" Margin="2">&#x25B6;</Button>
+					<Button Click="NextFrame" Margin="2">&#x23E9;</Button>
+					<Button Click="LastFrame" Margin="2">&#x23ED;</Button>
+				</UniformGrid>
+				<Grid Grid.Row="2" Margin="0,0,2,2">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<Button Name="AddAnimFrame" Width="64" Height="64" FontSize="32" Content="&#x2795;" Click="AddAnimationFrame" Margin="0,0,2,0" Grid.Column="0" />
+					<ListBox Name="AnimationFrames" Height="80" SelectionMode="Single" Grid.Column="1" SelectionChanged="FrameSelected">
+						<ListBox.Resources>
+							<Style TargetType="ListBox">
+								<Setter Property="KeyboardNavigation.TabNavigation" Value="Continue" />
+							</Style>
+							<Style TargetType="ListBoxItem">
+								<Setter Property="IsTabStop" Value="False" />
+							</Style>
+						</ListBox.Resources>
+						<ListBox.ItemsPanel>
+							<ItemsPanelTemplate>
+								<StackPanel Orientation="Horizontal"/>
+							</ItemsPanelTemplate>
+						</ListBox.ItemsPanel>
+						<ListBox.ContextMenu>
+							<ContextMenu>
+								<MenuItem Header="Remove" Click="FrameRemove" />
+							</ContextMenu>
+						</ListBox.ContextMenu>
+					</ListBox>
+				</Grid>
+			</Grid>
+		</DockPanel>
+	</DockPanel>
 </Window>
